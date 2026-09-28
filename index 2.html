@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Доступный маршрут</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">Доступный маршрут</a>
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a href="#route">Маршрут</a>
+        <a href="#accessibility">Доступность</a>
+        <a href="#about">О проекте</a>
+      </nav>
+      <button class="button button-outline" id="openAuthButton" type="button">Войти</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-copy">
+        <p class="eyebrow">Городская навигация</p>
+        <h1>Маршрут с учётом доступности городской среды</h1>
+        <p class="hero-text">Постройте пешеходный маршрут и проверьте его по ключевым параметрам: лестницы, крутые участки, переходы и состояние покрытия.</p>
+        <a class="button button-primary" href="#route">Построить маршрут</a>
+      </div>
+      <div class="hero-panel">
+        <div class="hero-panel-icon">↗</div>
+        <p>Для пользователей колясок, людей с ограниченной мобильностью и всех, кому важна спокойная и понятная навигация.</p>
+      </div>
+    </section>
+
+    <section class="workspace container" id="route">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Новый маршрут</p>
+          <h2>Куда направляемся?</h2>
+        </div>
+        <div class="city-status" id="cityStatus">Москва</div>
+      </div>
+
+      <div class="route-layout">
+        <aside class="route-sidebar">
+          <form id="routeForm" class="route-form">
+            <label class="field-label" for="fromInput">Откуда</label>
+            <div class="input-wrap">
+              <span class="input-marker marker-start">●</span>
+              <input id="fromInput" type="text" placeholder="Адрес или место отправления" required>
+            </div>
+
+            <label class="field-label" for="toInput">Куда</label>
+            <div class="input-wrap">
+              <span class="input-marker marker-end">●</span>
+              <input id="toInput" type="text" placeholder="Адрес или место назначения" required>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label class="field-label" for="citySelect">Город</label>
+                <select id="citySelect">
+                  <option value="moscow">Москва</option>
+                  <option value="kazan">Казань</option>
+                  <option value="sochi">Сочи</option>
+                  <option value="spb">Санкт-Петербург</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label" for="routeMode">Тип маршрута</label>
+                <select id="routeMode">
+                  <option value="pedestrian">Пешеходный</option>
+                  <option value="accessible">С учётом доступности</option>
+                </select>
+              </div>
+            </div>
+
+            <label class="switch-row" for="avoidStairs">
+              <span>
+                <strong>Избегать лестниц</strong>
+                <small>Предпочитать пологие участки и пандусы</small>
+              </span>
+              <input id="avoidStairs" type="checkbox" checked>
+              <span class="switch"></span>
+            </label>
+
+            <button class="button button-primary button-wide" type="submit">Построить маршрут</button>
+            <p class="form-note" id="routeMessage">Для работы маршрутизатора заполните обе точки.</p>
+          </form>
+
+          <div class="route-result" id="routeResult" hidden>
+            <div class="result-title-row">
+              <h3>Предварительная оценка</h3>
+              <span class="score-badge" id="scoreBadge">82/100</span>
+            </div>
+            <p id="resultDescription">Маршрут построен с учётом пешеходных участков и доступных переходов.</p>
+            <div class="metric-list">
+              <div class="metric"><span>Длина</span><strong id="distanceValue">—</strong></div>
+              <div class="metric"><span>Время пешком</span><strong id="timeValue">—</strong></div>
+              <div class="metric"><span>Лестницы</span><strong class="metric-good" id="stairsValue">Проверяются</strong></div>
+            </div>
+          </div>
+        </aside>
+
+        <div class="map-card">
+          <div id="map" aria-label="Яндекс Карта маршрута"></div>
+          <div class="map-legend">
+            <span><i class="legend-dot legend-good"></i>Доступный участок</span>
+            <span><i class="legend-dot legend-warning"></i>Требует проверки</span>
+            <span><i class="legend-dot legend-danger"></i>Препятствие</span>
+          </div>
+          <div class="map-note">Яндекс Карты. Точки оценки доступности представлены в демонстрационном виде.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="accessibility-section" id="accessibility">
+      <div class="container">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">Проверка пути</p>
+            <h2>Что учитывает оценка</h2>
+          </div>
+          <p class="section-description">Каждый участок получает понятный статус, чтобы пользователь мог заранее оценить комфорт и возможные сложности.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><div class="feature-icon">↘</div><h3>Съезды с бордюров</h3><p>Отмечаем предполагаемые съезды и проблемные места возле переходов.</p></article>
+          <article class="feature-card"><div class="feature-icon">▥</div><h3>Лестницы</h3><p>Предупреждаем о лестницах и предлагаем учитывать их при выборе пути.</p></article>
+          <article class="feature-card"><div class="feature-icon">≈</div><h3>Покрытие</h3><p>Учитываем участки, где качество покрытия может влиять на комфорт движения.</p></article>
+          <article class="feature-card"><div class="feature-icon">⌁</div><h3>Пешеходные тропы</h3><p>Показываем пешеходный путь на карте с основными точками проверки.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section container" id="about">
+      <div>
+        <p class="eyebrow">О сервисе</p>
+        <h2>Понятная навигация для реального города</h2>
+      </div>
+      <div class="about-text">
+        <p>Сервис помогает сравнить маршрут не только по расстоянию, но и по доступности городской инфраструктуры. Информация о препятствиях отображается прямо на карте и сопровождается пояснениями.</p>
+        <p class="disclaimer">Оценка является предварительной и не заменяет личную проверку маршрута перед поездкой.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><span>Доступный маршрут</span><span>Учебный прототип</span></div></footer>
+
+  <div class="modal-backdrop" id="authModal" hidden>
+    <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" id="closeAuthButton" type="button" aria-label="Закрыть">×</button>
+      <p class="eyebrow">Личный кабинет</p>
+      <h2 id="authTitle">Сохранить маршруты</h2>
+      <p class="modal-description">Создайте учётную запись, чтобы сохранять адреса и результаты оценки.</p>
+      <form id="authForm" class="auth-form">
+        <label class="field-label" for="nameInput">Имя</label>
+        <input id="nameInput" type="text" placeholder="Ваше имя" required>
+        <label class="field-label" for="emailInput">Электронная почта</label>
+        <input id="emailInput" type="email" placeholder="name@example.com" required>
+        <label class="field-label" for="passwordInput">Пароль</label>
+        <input id="passwordInput" type="password" placeholder="Не менее 6 символов" minlength="6" required>
+        <button class="button button-primary button-wide" type="submit">Создать учётную запись</button>
+        <p class="auth-message" id="authMessage"></p>
+      </form>
+    </section>
+  </div>
+
+  <!-- Вставьте вместо YOUR_YANDEX_MAPS_API_KEY личный ключ Яндекс Maps API -->
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_YANDEX_MAPS_API_KEY&lang=ru_RU" type="text/javascript"></script>
+  <script src="script.js"></script>
+</body>
+</html>
